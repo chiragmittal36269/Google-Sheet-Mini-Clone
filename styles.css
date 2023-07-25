@@ -9,6 +9,7 @@ th {
 	min-width: 80px;
 	max-width: 100px;
 	border: 1px solid black;
+	line-height: 20px;
 }
 
 table {

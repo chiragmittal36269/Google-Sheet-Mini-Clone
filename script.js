@@ -24,6 +24,21 @@ let lastClickButton; // its value is lies between cut and copy.
 const columns = 26;
 const rows = 100;
 
+// create the 2D matrix
+//forming of outer array
+let matrix = new Array(rows);
+// console.log(matrix);
+for (let i = 0; i < rows; i++) {
+	//forming the inner array
+	matrix[i] = new Array(columns);
+	//putting the empty object in the inner arrays
+	for (let j = 0; j < columns; j++) {
+		// matrix[i][j] = `${i}${j}`;
+		matrix[i][j] = {};
+	}
+}
+console.log(matrix);
+
 for (let i = 0; i < columns; i++) {
 	let th = document.createElement("th");
 	th.innerText = String.fromCharCode(i + 65);
