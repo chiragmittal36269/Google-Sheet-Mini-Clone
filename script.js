@@ -18,7 +18,8 @@ const textColorInput = document.getElementById("text-color");
 const cutButton = document.getElementById("cut-button");
 const copyButton = document.getElementById("copy-button");
 const pasteButton = document.getElementById("paste-button");
-let cutCell = {};
+let cutCopyCell = {};
+let lastClickButton; // its value is lies between cut and copy.
 
 const columns = 26;
 const rows = 100;
@@ -66,28 +67,10 @@ for (let i = 1; i <= rows; i++) {
 function onFocusFn(event) {
 	// console.log(event);
 	currentCell = event.target;
-	document.getElementById("current-cell").innerText = event.target.id;
+	document.getElementById("current-cell").innerText = event.target.id; // here i am putting the id in the blank space before A cell
 	// currentCell.style.backgroundColor = "lightgrey";
 
 	buttonColors();
-
-	// if (currentCell.style.fontWeight === "bold") {
-	// 	boldButton.style.backgroundColor = "yellow";
-	// } else {
-	// 	boldButton.style.backgroundColor = "transparent";
-	// }
-
-	// if (currentCell.style.fontStyle === "italic") {
-	// 	italicButton.style.backgroundColor = "orange";
-	// } else {
-	// 	italicButton.style.backgroundColor = "transparent";
-	// }
-
-	// if (currentCell.style.textDecoration === "underline") {
-	// 	underlineButton.style.backgroundColor = "green";
-	// } else {
-	// 	underlineButton.style.backgroundColor = "transparent";
-	// }
 }
 
 function buttonColors() {
@@ -253,10 +236,54 @@ textColorInput.addEventListener("input", (event) => {
 });
 
 cutButton.addEventListener("click", (event) => {
-	// here event is pointing out to the cut button so not be use the event argument.
-	// store the currentCell in the global variable(cutCell) so that we can paste it on some other place
-	cutCell = {
+	// here event is pointing out to the cutButton tag so not be use the event argument.
+	// store the currentCell in the global variable(cutCopyCell) so that we can paste it on some other place
+
+	cutCopyCell = {
 		style: currentCell.style.cssText,
 		text: currentCell.innerText,
 	};
+	// we can also do the above code in this way
+	// cutCopyCell.style = currentCell.style.cssText;
+	// cutCopyCell.innerText = currentCell.innerText;
+
+	// here we no need to copy the whole css so that is the reason we only copy the cssText which is provided by the user.
+
+	//because we cut the data so the data will be cut from the currentCell that is the reason I use ("") to clean the text as well as the style.
+	// here we can also do currentCell.style = "";
+	// it will also work but we only need to delete the cssText which was provided by the use so we are doing that thing only
+	currentCell.style.cssText = "";
+	currentCell.innerText = "";
+	lastClickButton = "cut";
+
+	console.log(cutCopyCell);
+});
+
+copyButton.addEventListener("click", (event) => {
+	// here event is pointing out to the copyButton tag so not be use the event argument.
+	// store the currentCell in the global variable(cutCopyCell) so that we can paste it on some other place
+
+	cutCopyCell = {
+		style: currentCell.style.cssText,
+		text: currentCell.innerText,
+	};
+	// we can also do the above code in this way
+	// cutCopyCell.style = currentCell.style.cssText;
+	// cutCopyCell.innerText = currentCell.innerText;
+
+	// here we no need to copy the whole css so that is the reason we only copy the cssText which is provided by the user.
+
+	lastClickButton = "copy";
+
+	console.log(cutCopyCell);
+});
+
+pasteButton.addEventListener("click", (event) => {
+	currentCell.innerText = cutCopyCell.text;
+	currentCell.style.cssText = cutCopyCell.style;
+
+	// in case of cut when we paste the data then it will delete from the clipboard history so we are doing this manually
+	if (lastClickButton == "cut") {
+		cutCopyCell = {};
+	}
 });
