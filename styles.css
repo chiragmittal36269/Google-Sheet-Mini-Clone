@@ -26,7 +26,9 @@ td:focus {
 	background-color: lightgrey;
 }
 
-.top-buttons {
+.top-buttons-1,
+.top-buttons-2,
+.top-buttons-3 {
 	display: flex;
 	align-items: center;
 	justify-content: start;
@@ -97,5 +99,12 @@ td:focus {
 #font-size,
 #font-style {
 	width: fit-content;
+	height: 25px;
+}
+
+#cut-button,
+#copy-button,
+#paste-button {
+	width: 50px;
 	height: 25px;
 }

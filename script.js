@@ -13,6 +13,12 @@ const centerAlignButton = document.getElementById("center-align-button");
 // const justifyAlignButton = document.getElementById("justify-align-button");
 const fontSizeDropdown = document.getElementById("font-size");
 const fontStyleDropdown = document.getElementById("font-style");
+const bgColorInput = document.getElementById("bg-color");
+const textColorInput = document.getElementById("text-color");
+const cutButton = document.getElementById("cut-button");
+const copyButton = document.getElementById("copy-button");
+const pasteButton = document.getElementById("paste-button");
+let cutCell = {};
 
 const columns = 26;
 const rows = 100;
@@ -232,4 +238,25 @@ fontSizeDropdown.addEventListener("change", (event) => {
 fontStyleDropdown.addEventListener("change", (event) => {
 	// currentCell.style.fontFamily = event.target.value;
 	currentCell.style.fontFamily = fontStyleDropdown.value;
+});
+
+// in case of input tags change and input both works but input tag creates the performance issue so we prefer change instead of input tag
+// performance issue is like :- when we want to change the color then we hover on colors to pick the most accurate one then when we hover on multiple colors then it will also change the color so it will be a bulky thing.
+bgColorInput.addEventListener("change", (event) => {
+	// currentCell.style.backgroundColor = event.target.value;
+	currentCell.style.backgroundColor = bgColorInput.value;
+});
+
+textColorInput.addEventListener("input", (event) => {
+	// currentCell.style.color = event.target.value;
+	currentCell.style.color = textColorInput.value;
+});
+
+cutButton.addEventListener("click", (event) => {
+	// here event is pointing out to the cut button so not be use the event argument.
+	// store the currentCell in the global variable(cutCell) so that we can paste it on some other place
+	cutCell = {
+		style: currentCell.style.cssText,
+		text: currentCell.innerText,
+	};
 });
