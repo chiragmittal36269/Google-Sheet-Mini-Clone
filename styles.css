@@ -93,3 +93,9 @@ td:focus {
 	width: 100%;
 	height: 100%;
 } */
+
+#font-size,
+#font-style {
+	width: fit-content;
+	height: 25px;
+}

@@ -7,10 +7,12 @@ let currentCell;
 const boldButton = document.getElementById("bold-button");
 const italicButton = document.getElementById("italic-button");
 const underlineButton = document.getElementById("underline-button");
-let leftAlignButton = document.getElementById("left-align-button");
-let rightAlignButton = document.getElementById("right-align-button");
-let centerAlignButton = document.getElementById("center-align-button");
-// let justifyAlignButton = document.getElementById("justify-align-button");
+const leftAlignButton = document.getElementById("left-align-button");
+const rightAlignButton = document.getElementById("right-align-button");
+const centerAlignButton = document.getElementById("center-align-button");
+// const justifyAlignButton = document.getElementById("justify-align-button");
+const fontSizeDropdown = document.getElementById("font-size");
+const fontStyleDropdown = document.getElementById("font-style");
 
 const columns = 26;
 const rows = 100;
@@ -219,3 +221,15 @@ rightAlignButton.addEventListener("click", (event) => {
 // 		justifyAlignButton.style.backgroundColor = "grey";
 // 	}
 // });
+
+fontSizeDropdown.addEventListener("change", (event) => {
+	// currentCell.style.fontSize = event.target.value;
+	// both are same
+	currentCell.style.fontSize = fontSizeDropdown.value;
+	//whatever option tag is selected by the end user the value will store in the select tag with value attribute
+});
+
+fontStyleDropdown.addEventListener("change", (event) => {
+	// currentCell.style.fontFamily = event.target.value;
+	currentCell.style.fontFamily = fontStyleDropdown.value;
+});
