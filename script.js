@@ -250,7 +250,7 @@ cutButton.addEventListener("click", (event) => {
 	// here we no need to copy the whole css so that is the reason we only copy the cssText which is provided by the user.
 
 	//because we cut the data so the data will be cut from the currentCell that is the reason I use ("") to clean the text as well as the style.
-	// here we can also do currentCell.style = "";
+	// here we can also do currentCell.style = null;
 	// it will also work but we only need to delete the cssText which was provided by the use so we are doing that thing only
 	currentCell.style.cssText = "";
 	currentCell.innerText = "";
