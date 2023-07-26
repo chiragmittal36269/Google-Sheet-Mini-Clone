@@ -342,6 +342,9 @@ cutButton.addEventListener("click", (event) => {
 	lastClickButton = "cut";
 
 	console.log(cutCopyCell);
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
 });
 
 copyButton.addEventListener("click", (event) => {
@@ -361,6 +364,8 @@ copyButton.addEventListener("click", (event) => {
 	lastClickButton = "copy";
 
 	console.log(cutCopyCell);
+
+	// in case of copy updateMatrix is not required because we are not changing the table content we are just copy that content.
 });
 
 pasteButton.addEventListener("click", (event) => {
@@ -371,4 +376,7 @@ pasteButton.addEventListener("click", (event) => {
 	if (lastClickButton == "cut") {
 		cutCopyCell = {};
 	}
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
 });
