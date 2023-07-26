@@ -37,7 +37,7 @@ for (let i = 0; i < rows; i++) {
 		matrix[i][j] = {};
 	}
 }
-console.log(matrix);
+// console.log(matrix);
 
 for (let i = 0; i < columns; i++) {
 	let th = document.createElement("th");
@@ -69,14 +69,52 @@ for (let i = 1; i <= rows; i++) {
 
 		td.setAttribute("contentEditable", "true");
 		td.setAttribute("id", `${String.fromCharCode(j + 65)}${i}`);
+
+		//this event revolves around the focus on a cell
 		td.addEventListener("focus", (event) => {
 			onFocusFn(event);
+		});
+
+		//this event revolves around the input on a cell
+		td.addEventListener("input", (event) => {
+			onInputFn(event);
 		});
 
 		tr.appendChild(td);
 	}
 
 	tableBody.appendChild(tr);
+}
+
+function onInputFn(event) {
+	// console.log(event.target.innerText);
+	// console.log("test input");
+	updateMatrix(event.target);
+}
+
+function updateMatrix(currentCell) {
+	let tempObj = {
+		style: currentCell.style.cssText,
+		text: currentCell.innerText,
+		id: currentCell.id,
+	};
+
+	let j = currentCell.id.charCodeAt(0) - 65;
+	// currentCell.id will give me the id of that current cell which we are pointing.
+	// .charCodeAt(0) will give me the integer value of that respected character
+	// -65 if for zeroth indexing
+	// example:- A2 => A => 65
+	let i = currentCell.id.substring(1) - 1;
+	// substring(1) will give me the remaining character including 1st character.
+	// -1 is for zeroth indexing
+	// example:- A2 => 2
+	// let s = "";
+	// s.substring(0);
+	// console.log(i, j);
+
+	matrix[i][j] = tempObj;
+
+	console.log(matrix);
 }
 
 function onFocusFn(event) {
@@ -145,6 +183,9 @@ boldButton.addEventListener("click", (event) => {
 
 	// currentCell.style.fontWeight =
 	// 	currentCell.style.fontWeight === "bold" ? "normal" : "bold";
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
 });
 
 italicButton.addEventListener("click", (event) => {
@@ -160,6 +201,9 @@ italicButton.addEventListener("click", (event) => {
 
 	// currentCell.style.fontStyle =
 	// 	currentCell.style.fontStyle === "italic" ? "normal" : "italic";
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
 });
 
 underlineButton.addEventListener("click", (event) => {
@@ -175,6 +219,9 @@ underlineButton.addEventListener("click", (event) => {
 
 	// currentCell.style.textDecoration =
 	// 	currentCell.style.textDecoration === "underline" ? "none" : "underline";
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
 });
 
 leftAlignButton.addEventListener("click", (event) => {
@@ -188,6 +235,9 @@ leftAlignButton.addEventListener("click", (event) => {
 		rightAlignButton.style.backgroundColor = "transparent";
 		justifyAlignButton.style.backgroundColor = "transparent";
 	}
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
 });
 
 centerAlignButton.addEventListener("click", (event) => {
@@ -201,6 +251,9 @@ centerAlignButton.addEventListener("click", (event) => {
 		rightAlignButton.style.backgroundColor = "transparent";
 		justifyAlignButton.style.backgroundColor = "transparent";
 	}
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
 });
 
 rightAlignButton.addEventListener("click", (event) => {
@@ -214,6 +267,9 @@ rightAlignButton.addEventListener("click", (event) => {
 		leftAlignButton.style.backgroundColor = "transparent";
 		justifyAlignButton.style.backgroundColor = "transparent";
 	}
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
 });
 
 // justifyAlignButton.addEventListener("click", (event) => {
@@ -229,13 +285,21 @@ rightAlignButton.addEventListener("click", (event) => {
 fontSizeDropdown.addEventListener("change", (event) => {
 	// currentCell.style.fontSize = event.target.value;
 	// both are same
+	// console.log(event.target);
+	// console.log(fontSizeDropdown);
 	currentCell.style.fontSize = fontSizeDropdown.value;
 	//whatever option tag is selected by the end user the value will store in the select tag with value attribute
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
 });
 
 fontStyleDropdown.addEventListener("change", (event) => {
 	// currentCell.style.fontFamily = event.target.value;
 	currentCell.style.fontFamily = fontStyleDropdown.value;
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
 });
 
 // in case of input tags change and input both works but input tag creates the performance issue so we prefer change instead of input tag
@@ -243,11 +307,17 @@ fontStyleDropdown.addEventListener("change", (event) => {
 bgColorInput.addEventListener("change", (event) => {
 	// currentCell.style.backgroundColor = event.target.value;
 	currentCell.style.backgroundColor = bgColorInput.value;
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
 });
 
 textColorInput.addEventListener("input", (event) => {
 	// currentCell.style.color = event.target.value;
 	currentCell.style.color = textColorInput.value;
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
 });
 
 cutButton.addEventListener("click", (event) => {
