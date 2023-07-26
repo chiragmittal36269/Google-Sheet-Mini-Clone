@@ -18,13 +18,19 @@ const textColorInput = document.getElementById("text-color");
 const cutButton = document.getElementById("cut-button");
 const copyButton = document.getElementById("copy-button");
 const pasteButton = document.getElementById("paste-button");
+const upperCaseButton = document.getElementById("upperCase-button");
+const lowerCaseButton = document.getElementById("lowerCase-button");
+const capitalizeButton = document.getElementById("capitalize-button");
+const downloadButton = document.getElementById("download-button");
+const uploadButton = document.getElementById("upload-button");
+
 let cutCopyCell = {};
 let lastClickButton; // its value is lies between cut and copy.
 
 const columns = 26;
 const rows = 100;
 
-// create the 2D matrix
+// create the 2D matrix to store the table data and easy to download it.
 //forming of outer array
 let matrix = new Array(rows);
 // console.log(matrix);
@@ -114,7 +120,7 @@ function updateMatrix(currentCell) {
 
 	matrix[i][j] = tempObj;
 
-	console.log(matrix);
+	// console.log(matrix);
 }
 
 function onFocusFn(event) {
@@ -168,6 +174,24 @@ function buttonColors() {
 	// } else {
 	// 	justifyAlignButton.style.backgroundColor = "transparent";
 	// }
+
+	if (currentCell.style.textTransform === "uppercase") {
+		upperCaseButton.style.backgroundColor = "grey";
+	} else {
+		upperCaseButton.style.backgroundColor = "transparent";
+	}
+
+	if (currentCell.style.textTransform === "lowercase") {
+		lowerCaseButton.style.backgroundColor = "grey";
+	} else {
+		lowerCaseButton.style.backgroundColor = "transparent";
+	}
+
+	if (currentCell.style.textTransform === "capitalized") {
+		capitalizeButton.style.backgroundColor = "grey";
+	} else {
+		capitalizeButton.style.backgroundColor = "transparent";
+	}
 }
 
 boldButton.addEventListener("click", (event) => {
@@ -380,3 +404,61 @@ pasteButton.addEventListener("click", (event) => {
 	// latest style to be in the matrix
 	updateMatrix(currentCell);
 });
+
+upperCaseButton.addEventListener("click", (event) => {
+	// console.log(currentCell.style);
+	if (currentCell.style.textTransform === "UPPERCASE") {
+		currentCell.style.textTransform = "none";
+		upperCaseButton.style.backgroundColor = "transparent";
+	} else {
+		currentCell.style.textTransform = "UPPERCASE";
+		upperCaseButton.style.backgroundColor = "grey";
+		lowerCaseButton.style.backgroundColor = "transparent";
+		capitalizeButton.style.backgroundColor = "transparent";
+	}
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
+});
+
+lowerCaseButton.addEventListener("click", (event) => {
+	if (currentCell.style.textTransform === "lowercase") {
+		currentCell.style.textTransform = "none";
+		lowerCaseButton.style.backgroundColor = "transparent";
+	} else {
+		currentCell.style.textTransform = "lowercase";
+		lowerCaseButton.style.backgroundColor = "grey";
+		upperCaseButton.style.backgroundColor = "transparent";
+		capitalizeButton.style.backgroundColor = "transparent";
+	}
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
+});
+
+capitalizeButton.addEventListener("click", (event) => {
+	if (currentCell.style.textTransform === "capitalize") {
+		currentCell.style.textTransform = "none";
+		capitalizeButton.style.backgroundColor = "transparent";
+	} else {
+		currentCell.style.textTransform = "capitalize";
+		capitalizeButton.style.backgroundColor = "grey";
+		upperCaseButton.style.backgroundColor = "transparent";
+		lowerCaseButton.style.backgroundColor = "transparent";
+	}
+
+	// latest style to be in the matrix
+	updateMatrix(currentCell);
+});
+
+downloadButton.addEventListener("click", (event) => {
+	downloadJSON(event);
+});
+
+function downloadJSON(event) {
+	//2D matrix into string
+	const matrixString = JSON.stringify(matrix);
+
+	//text form of matrix  -> piece of memory (downloadable)
+	
+}

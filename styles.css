@@ -29,7 +29,9 @@ td:focus {
 
 .top-buttons-1,
 .top-buttons-2,
-.top-buttons-3 {
+.top-buttons-3,
+.top-buttons-4,
+.top-buttons-5 {
 	display: flex;
 	align-items: center;
 	justify-content: start;
@@ -37,7 +39,9 @@ td:focus {
 	margin-bottom: 10px;
 }
 
-#bold-button {
+#bold-button,
+#italic-button,
+#underline-button {
 	font-weight: 750;
 	width: 50px;
 	height: 25px;
@@ -45,43 +49,21 @@ td:focus {
 
 #italic-button {
 	font-style: italic;
-	width: 50px;
-	height: 25px;
-	font-weight: 750;
 }
 
 #underline-button {
 	text-decoration: underline;
-	width: 50px;
-	height: 25px;
-	font-weight: 750;
 }
 
-#left-align-button {
-	width: 50px;
-	height: 25px;
-}
-
-#left-align-button img {
-	width: 100%;
-	height: 100%;
-}
-
-#center-align-button {
-	width: 50px;
-	height: 25px;
-}
-
-#center-align-button img {
-	width: 100%;
-	height: 100%;
-}
-
+#left-align-button,
+#center-align-button,
 #right-align-button {
 	width: 50px;
 	height: 25px;
 }
 
+#left-align-button img,
+#center-align-button img,
 #right-align-button img {
 	width: 100%;
 	height: 100%;
@@ -107,5 +89,24 @@ td:focus {
 #copy-button,
 #paste-button {
 	width: 50px;
+	height: 25px;
+}
+
+#download-button img,
+#upload-button img {
+	width: 100%;
+	height: 100%;
+}
+
+#download-button,
+#upload-button {
+	width: 50px;
+	height: 25px;
+}
+
+#upperCase-button,
+#lowerCase-button,
+#capitalize-button {
+	width: 75px;
 	height: 25px;
 }
