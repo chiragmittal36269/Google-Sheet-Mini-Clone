@@ -22,7 +22,7 @@ const upperCaseButton = document.getElementById("upperCase-button");
 const lowerCaseButton = document.getElementById("lowerCase-button");
 const capitalizeButton = document.getElementById("capitalize-button");
 const downloadButton = document.getElementById("download-button");
-const uploadButton = document.getElementById("upload-button");
+const uploadJsonFile = document.getElementById("jsonFile");
 
 let cutCopyCell = {};
 let lastClickButton; // its value is lies between cut and copy.
@@ -30,7 +30,7 @@ let lastClickButton; // its value is lies between cut and copy.
 const columns = 26;
 const rows = 100;
 
-// create the 2D matrix to store the table data and easy to download it.
+// create the 2D matrix to store the table data and make it easy to download it.
 //forming of outer array
 let matrix = new Array(rows);
 // console.log(matrix);
@@ -92,6 +92,7 @@ for (let i = 1; i <= rows; i++) {
 	tableBody.appendChild(tr);
 }
 
+//onInputFn helps me to add the data in the matrix from the table.
 function onInputFn(event) {
 	// console.log(event.target.innerText);
 	// console.log("test input");
@@ -451,6 +452,9 @@ capitalizeButton.addEventListener("click", (event) => {
 	updateMatrix(currentCell);
 });
 
+//////////////////////////////////////////////////////////////
+// download functioning
+
 downloadButton.addEventListener("click", (event) => {
 	downloadJSON(event);
 });
@@ -458,7 +462,87 @@ downloadButton.addEventListener("click", (event) => {
 function downloadJSON(event) {
 	//2D matrix into string
 	const matrixString = JSON.stringify(matrix);
+	// matrixString is the string version of matrix.
 
 	//text form of matrix  -> piece of memory (downloadable)
-	
+	// blob => Blob is a class which basically taking data and convert this data in the file interface/format.
+	//application/json => format of json
+	const blob = new Blob([matrixString], { type: "application/json" });
+
+	// static link will have fixed href
+	// dynamic link will have variable href
+
+	//link created -> attach href and download
+	// click link
+	// delete link
+
+	const link = document.createElement("a");
+	// below line will convert the piece of memory to downloadable link
+	//link created -> attach href
+	link.href = URL.createObjectURL(blob);
+	// we want to download the table so we need to add download in the link otherwise it will open in a new tab
+	link.download = "table.json";
+	//add link to body
+	document.body.appendChild(link);
+	//click link
+	link.click();
+	//delete link
+	document.body.removeChild(link);
+}
+
+/////////////////////////////////////////////////////////////
+// upload functioning
+
+// input and change they both will work same in this scenario
+uploadJsonFile.addEventListener("change", uploadJSONFileFn);
+
+function uploadJSONFileFn(event) {
+	const file = event.target.files[0];
+	if (file) {
+		// file reader read the external files
+		// it is doing the opposite work
+		const reader = new FileReader(file);
+		// readAsText is to activate the reader
+		reader.readAsText(file);
+
+		//trigger the reader? => use .readAsText method to trigger the reader
+
+		//default operations
+		// .onload method is having default function/operations that will get triggered after we call .readAsText
+		//.onload is internal method which is internally executed.
+		// example: - looks like this
+		// 	function readAsText(file) {
+		// 		onload();
+		// 	}
+
+		// we change the onload function
+		reader.onload = function (e) {
+			const fileContent = e.target.result;
+
+			//uploading JSON file -> matrix -> table
+
+			try {
+				//updating my matrix by converting the json file into object one.
+				matrix = JSON.parse(fileContent);
+
+				// iterate over the matrix so that I can fill the matrix data in the table
+				matrix.forEach((row) => {
+					// here we are having row as the 1st element and we are accessing the 1st element in a row as a cell
+					row.forEach((cell) => {
+						// now i have id, innerText, cssText
+						if (cell.id) {
+							let cellToBeEdited = document.getElementById(
+								cell.id
+							);
+							cellToBeEdited.innerText = cell.Text;
+							cellToBeEdited.style.cssText = cell.style;
+						}
+						// else empty object do nothing
+					});
+				});
+			} catch {
+				console.log(err);
+			}
+		};
+	}
 }

@@ -98,8 +98,7 @@ td:focus {
 	height: 100%;
 }
 
-#download-button,
-#upload-button {
+#download-button {
 	width: 50px;
 	height: 25px;
 }
