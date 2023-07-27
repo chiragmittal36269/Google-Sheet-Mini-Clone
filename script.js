@@ -2,8 +2,6 @@ const tableHeadRow = document.getElementById("table-head-row");
 
 const tableBody = document.getElementById("table-body");
 
-let currentCell;
-
 const boldButton = document.getElementById("bold-button");
 const italicButton = document.getElementById("italic-button");
 const underlineButton = document.getElementById("underline-button");
@@ -23,10 +21,18 @@ const lowerCaseButton = document.getElementById("lowerCase-button");
 const capitalizeButton = document.getElementById("capitalize-button");
 const downloadButton = document.getElementById("download-button");
 const uploadJsonFile = document.getElementById("jsonFile");
+const addSheetButton = document.getElementById("add-sheet-button");
+const buttonContainer = document.getElementById("button-container");
+const sheetNo = document.getElementById("sheet-no");
 
 let cutCopyCell = {};
+
+let numSheets = 1;
+let currentSheetNum = 1;
+
 let lastClickButton; // its value is lies between cut and copy.
 
+let currentCell;
 const columns = 26;
 const rows = 100;
 
@@ -45,6 +51,7 @@ for (let i = 0; i < rows; i++) {
 }
 // console.log(matrix);
 
+// making 1st row in table A B C D
 for (let i = 0; i < columns; i++) {
 	let th = document.createElement("th");
 	th.innerText = String.fromCharCode(i + 65);
@@ -52,6 +59,7 @@ for (let i = 0; i < columns; i++) {
 	tableHeadRow.appendChild(th);
 }
 
+// making the table body
 for (let i = 1; i <= rows; i++) {
 	let tr = document.createElement("tr");
 
@@ -498,6 +506,7 @@ uploadJsonFile.addEventListener("change", uploadJSONFileFn);
 
 function uploadJSONFileFn(event) {
 	const file = event.target.files[0];
+	// event.target.files is having the information of the files which we choose to open
 	if (file) {
 		// file reader read the external files
 		// it is doing the opposite work
@@ -518,6 +527,7 @@ function uploadJSONFileFn(event) {
 		// we change the onload function
 		reader.onload = function (e) {
 			const fileContent = e.target.result;
+			//e.target.result is having the data on the file which we fetch
 
 			//uploading JSON file -> matrix -> table
 
@@ -545,4 +555,110 @@ function uploadJSONFileFn(event) {
 			}
 		};
 	}
+}
+
+addSheetButton.addEventListener("click", () => {
+	const btn = document.createElement("button");
+	numSheets++;
+	currentSheetNum = numSheets;
+	btn.innerText = `Sheet ${numSheets}`;
+	btn.setAttribute("id", `sheet-${numSheets}`);
+	btn.setAttribute("onclick", "viewSheet(event)");
+	// we also do this btn.id = `sheet-${numSheets}`;
+	buttonContainer.appendChild(btn);
+
+	if (localStorage.getItem("arrMatrix")) {
+		var oldMatrixArr = localStorage.getItem("arrMatrix");
+		// oldMatrixArr is a string so we need to convert it
+
+		// here we are spread the oldMatrixArr in newMatrixArr
+		// using spread operator it will create a new matrix which is different from the old one.
+		// like the storage point is different for both of the matrix.
+		var newMatrixArr = [...JSON.parse(oldMatrixArr), matrix];
+		//oldMatrixArr = [1,2,3]
+		// newMatrixArr = [...oldMatrixArr];
+
+		localStorage.setItem("arrMatrix", JSON.stringify(newMatrixArr));
+	} else {
+		let tempMatrixArr = [matrix];
+		localStorage.setItem("arrMatrix", JSON.stringify(tempMatrixArr));
+	}
+
+	// cleanup the virtual memory i.e. table
+	for (let i = 0; i < rows; i++) {
+		matrix[i] = new Array(columns);
+		for (let j = 0; j < columns; j++) {
+			matrix[i][j] = {};
+		}
+	}
+
+	sheetNo.innerText = "Sheet No -" + currentSheetNum;
+	tableBody.innerHTML = "";
+
+	tableBodyCreation();
+});
+
+function tableBodyCreation() {
+	for (let i = 1; i <= rows; i++) {
+		let tr = document.createElement("tr");
+
+		let th = document.createElement("th");
+		th.innerText = i;
+
+		tr.appendChild(th);
+
+		for (let j = 0; j < columns; j++) {
+			let td = document.createElement("td");
+
+			// td.className = `${i}${String.fromCharCode(j + 65)}`;
+			// td.addEventListener("click", (event) => {
+			// 	console.log(event);
+			// 	console.log(event.target);
+			// 	console.log(event.target.innerHTML);
+			// 	onFocusFn(event);
+			// 	console.log(event.target.className);
+			// 	console.log(td.className);
+			// });
+
+			td.setAttribute("contentEditable", "true");
+			td.setAttribute("id", `${String.fromCharCode(j + 65)}${i}`);
+
+			//this event revolves around the focus on a cell
+			td.addEventListener("focus", (event) => {
+				onFocusFn(event);
+			});
+
+			//this event revolves around the input on a cell
+			td.addEventListener("input", (event) => {
+				onInputFn(event);
+			});
+
+			tr.appendChild(td);
+		}
+
+		tableBody.appendChild(tr);
+	}
+}
+
+function viewSheet(event) {
+	let id = event.target.id.split("-")[1];
+	var matrixArr = JSON.parse(localStorage.getItem("arrMatrix"));
+	matrix = matrixArr[id - 1];
+
+	tableBody.innerHTML = "";
+
+	tableBodyCreation();
+
+	matrix.forEach((row) => {
+		// here we are having row as the 1st element and we are accessing the 1st element in a row as a cell
+		row.forEach((cell) => {
+			// now i have id, innerText, cssText
+			if (cell.id) {
+				let cellToBeEdited = document.getElementById(cell.id);
+				cellToBeEdited.innerText = cell.text;
+				cellToBeEdited.style.cssText = cell.style;
+			}
+		});
+	});
+	sheetNo.innerText = "Sheet No -" + currentSheetNum;
 }
