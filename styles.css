@@ -1,8 +1,12 @@
-/* * {
+* {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-} */
+}
+
+body {
+	padding: 5px;
+}
 
 td,
 th {
@@ -92,6 +96,13 @@ td:focus {
 	height: 25px;
 }
 
+#cut-button img,
+#copy-button img,
+#paste-button img {
+	width: 100%;
+	height: 100%;
+}
+
 #download-button img,
 #upload-button img {
 	width: 100%;
@@ -126,4 +137,14 @@ td:focus {
 
 #button-container button {
 	width: 100px;
+}
+
+#add-sheet-button {
+	width: 75px;
+	height: 25px;
+}
+
+#add-sheet-button img {
+	width: 100%;
+	height: 100%;
 }

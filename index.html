@@ -11,17 +11,22 @@
 	<body>
 		<div class="top-buttons-1">
 			<button id="bold-button">B</button>
+
 			<button id="italic-button">I</button>
+
 			<button id="underline-button">U</button>
+
 			<button id="left-align-button">
 				<img src="./text-align-left-svgrepo-com.svg" alt="left-align" />
 			</button>
+
 			<button id="center-align-button">
 				<img
 					src="./text-align-center-svgrepo-com.svg"
 					alt="center-align"
 				/>
 			</button>
+
 			<button id="right-align-button">
 				<img
 					src="./text-align-right-svgrepo-com.svg"
@@ -55,6 +60,24 @@
 				<option value="monospace">Monospace</option>
 				<option value="fantasy">Fantasy</option>
 			</select>
+
+			<!-- <div class="top-buttons-3"> -->
+			<button id="cut-button">
+				<img src="./cut-scissor-icon.svg" alt="" />
+			</button>
+			<button id="copy-button">
+				<img src="./copy-file-icon.svg" alt="" />
+			</button>
+			<button id="paste-button">
+				<img src="./paste-icon.svg" alt="" />
+			</button>
+			<!-- </div> -->
+
+			<!-- <div class="top-buttons-5"> -->
+			<button id="upperCase-button">ABC DEF</button>
+			<button id="lowerCase-button">abc def</button>
+			<button id="capitalize-button">Abc Def</button>
+			<!-- </div> -->
 		</div>
 
 		<div class="top-buttons-2">
@@ -63,33 +86,43 @@
 
 			<label for="text-color">Font Color</label>
 			<input type="color" id="text-color" />
-		</div>
 
-		<div class="top-buttons-3">
-			<button id="cut-button">Cut</button>
-			<button id="copy-button">Copy</button>
-			<button id="paste-button">Paste</button>
-		</div>
-
-		<div class="top-buttons-4">
 			<button id="download-button">
 				<img src="./download1-svgrepo-com.svg" alt="download button" />
 			</button>
 			<input type="file" id="jsonFile" accept=".json" />
-			<!-- <button id="upload-button">
-				<img src="./upload1-svgrepo-com.svg" alt="upload button" />
-			</button> -->
 		</div>
 
-		<div class="top-buttons-5">
+		<!-- <div class="top-buttons-3">
+			<button id="cut-button">
+				<img src="./cut-scissor-icon.svg" alt="" />
+			</button>
+			<button id="copy-button">
+				<img src="./copy-file-icon.svg" alt="" />
+			</button>
+			<button id="paste-button">
+				<img src="./paste-icon.svg" alt="" />
+			</button>
+		</div> -->
+
+		<!-- <div class="top-buttons-4">
+			<button id="download-button">
+				<img src="./download1-svgrepo-com.svg" alt="download button" />
+			</button>
+			<input type="file" id="jsonFile" accept=".json" />
+		</div> -->
+
+		<!-- <div class="top-buttons-5">
 			<button id="upperCase-button">ABC DEF</button>
 			<button id="lowerCase-button">abc def</button>
 			<button id="capitalize-button">Abc Def</button>
-		</div>
+		</div> -->
 
-		<button id="add-sheet-button">Add Sheet</button>
+		<button id="add-sheet-button">
+			<img src="./button-circle-round-add-svgrepo-com.svg" alt="" />
+		</button>
 
-		<h1 id="sheet-no">Sheet No -> 1</h1>
+		<h1 id="sheet-no">Sheet No => 1</h1>
 
 		<div id="button-container">
 			<button id="sheet-1" onclick="viewSheet(event)">Sheet 1</button>
