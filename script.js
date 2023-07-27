@@ -592,7 +592,7 @@ addSheetButton.addEventListener("click", () => {
 		}
 	}
 
-	sheetNo.innerText = "Sheet No -" + currentSheetNum;
+	sheetNo.innerText = "Sheet No -> " + currentSheetNum;
 	tableBody.innerHTML = "";
 
 	tableBodyCreation();
@@ -660,5 +660,5 @@ function viewSheet(event) {
 			}
 		});
 	});
-	sheetNo.innerText = "Sheet No -" + currentSheetNum;
+	sheetNo.innerText = "Sheet No -> " + currentSheetNum;
 }
