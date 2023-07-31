@@ -584,7 +584,7 @@ addSheetButton.addEventListener("click", () => {
 		localStorage.setItem("arrMatrix", JSON.stringify(tempMatrixArr));
 	}
 
-	// cleanup the virtual memory i.e. table
+	// cleanup the virtual memory i.e. table so that old data is not placed in the memory of new table
 	for (let i = 0; i < rows; i++) {
 		matrix[i] = new Array(columns);
 		for (let j = 0; j < columns; j++) {
@@ -649,6 +649,11 @@ function viewSheet(event) {
 
 	tableBodyCreation();
 
+	if (matrix === null || matrix === undefined) {
+		console.log("error");
+		return;
+	}
+
 	matrix.forEach((row) => {
 		// here we are having row as the 1st element and we are accessing the 1st element in a row as a cell
 		row.forEach((cell) => {
@@ -666,3 +671,8 @@ function viewSheet(event) {
 	// sheetNo.innerText = "Sheet No => " + currentSheetNum;
 	sheetNo.innerText = "Sheet No => " + number;
 }
+
+window.onunload = () => {
+	// Clear the local storage
+	localStorage.clear();
+};
