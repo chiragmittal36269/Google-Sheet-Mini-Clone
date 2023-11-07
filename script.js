@@ -26,7 +26,7 @@ const buttonContainer = document.getElementById("button-container");
 const sheetNo = document.getElementById("sheet-no");
 
 // let cutCopyCell = {};
-// if we do cutCopyCell to empty object then it is difficult to write condition statement so
+// if we do cutCopyCell to empty object then it is difficult to write if condition statement so
 let cutCopyCell = null;
 
 let numSheets = 1;
@@ -40,31 +40,34 @@ const rows = 100;
 
 // create the 2D matrix to store the table data and make it easy to download it.
 //forming of outer array
-let matrix = new Array(rows);
+let matrix = new Array(rows); // creating an empty array of rows
 // console.log(matrix);
 for (let i = 0; i < rows; i++) {
     //forming the inner array
-    matrix[i] = new Array(columns);
-    //putting the empty object in the inner arrays
+    matrix[i] = new Array(columns); // creating an empty array of columns in a row
+    //putting the empty object in the inner arrays or each cell of array
     for (let j = 0; j < columns; j++) {
         // matrix[i][j] = `${i}${j}`;
-        matrix[i][j] = {};
+        matrix[i][j] = {}; // putting an empty object
     }
 }
 // console.log(matrix);
 
-// making 1st row in table A B C D
+// making 1st row in table of A B C D
 for (let i = 0; i < columns; i++) {
+    // first row in table having th tags so we create th tag
     let th = document.createElement("th");
+    // console.log(String.fromCharCode(i + 65));
     th.innerText = String.fromCharCode(i + 65);
 
     tableHeadRow.appendChild(th);
 }
 
-// making the table body
+// making the remaining table body
 for (let i = 1; i <= rows; i++) {
     let tr = document.createElement("tr");
 
+    // here we create the 1st column in table which contains 1 2 3 4
     let th = document.createElement("th");
     th.innerText = i;
 
@@ -83,7 +86,10 @@ for (let i = 1; i <= rows; i++) {
         // 	console.log(td.className);
         // });
 
+        // contentEditable is used so that we can able to edit the content of table byDefault it is false
         td.setAttribute("contentEditable", "true");
+
+        // give the id to each cell like A1 B1 C1 A2 B2 C2
         td.setAttribute("id", `${String.fromCharCode(j + 65)}${i}`);
 
         //this event revolves around the focus on a cell
@@ -91,7 +97,7 @@ for (let i = 1; i <= rows; i++) {
             onFocusFn(event);
         });
 
-        //this event revolves around the input on a cell
+        //this event revolves around the input in a cell
         td.addEventListener("input", (event) => {
             onInputFn(event);
         });
@@ -105,7 +111,7 @@ for (let i = 1; i <= rows; i++) {
 //onInputFn helps me to add the data in the matrix from the table.
 function onInputFn(event) {
     // console.log(event.target.innerText);
-    // console.log("test input");
+    // event.target.innerText === event.target.style.cssText
     updateMatrix(event.target);
 }
 
@@ -115,6 +121,7 @@ function updateMatrix(currentCell) {
         text: currentCell.innerText,
         id: currentCell.id,
     };
+    // console.log(tempObj);
 
     let j = currentCell.id.charCodeAt(0) - 65;
     // currentCell.id will give me the id of that current cell which we are pointing.
@@ -123,11 +130,8 @@ function updateMatrix(currentCell) {
     // example:- A2 => A => 65
     let i = currentCell.id.substring(1) - 1;
     // substring(1) will give me the remaining character including 1st character.
-    // -1 is for zeroth indexing
+    // -1 is for zeroth indexing so that we can insert the data directly in the Matrix because Matrix is zero based.
     // example:- A2 => 2
-    // let s = "";
-    // s.substring(0);
-    // console.log(i, j);
 
     matrix[i][j] = tempObj;
 
@@ -136,8 +140,10 @@ function updateMatrix(currentCell) {
 
 function onFocusFn(event) {
     // console.log(event);
-    currentCell = event.target;
-    document.getElementById("current-cell").innerText = event.target.id; // here i am putting the id in the blank space before A cell
+    currentCell = event.target; // it targets that cell which I am currently focused
+
+    document.getElementById("current-cell").innerText = event.target.id; // here i am putting the id of the cell which I am currently focused and put it in the no selected cell present before the "A" cell
+
     // currentCell.style.backgroundColor = "lightgrey";
 
     buttonColors();
@@ -576,6 +582,8 @@ addSheetButton.addEventListener("click", () => {
         // here we are spread the oldMatrixArr in newMatrixArr
         // using spread operator it will create a new matrix which is different from the old one.
         // like the storage point is different for both of the matrix.
+        // and then we also add the matrix which was currently created
+        // because we move from one sheet to another so we need to save the current sheet data which was present in the matrix
         var newMatrixArr = [...JSON.parse(oldMatrixArr), matrix];
         //oldMatrixArr = [1,2,3]
         // newMatrixArr = [...oldMatrixArr];
@@ -587,6 +595,12 @@ addSheetButton.addEventListener("click", () => {
     }
 
     // cleanup the virtual memory i.e. table so that old data is not placed in the memory of new table
+    // it is important because we only have one variable called matrix and if we are not deleting the data of matrix then it also visible on next page
+    // example:
+    // => on sheet 1 enter something on different locations
+    // => on sheet 2 enter something on different locations
+    // => on sheet 3 enter something on different locations
+    // and then when we move from one sheet to another then it shows all the data
     for (let i = 0; i < rows; i++) {
         matrix[i] = new Array(columns);
         for (let j = 0; j < columns; j++) {
@@ -645,28 +659,43 @@ function tableBodyCreation() {
 function viewSheet(event) {
     let id = event.target.id.split("-")[1];
     var matrixArr = JSON.parse(localStorage.getItem("arrMatrix"));
+    // here we have multiple array in an array and we want a specific array according to the sheet number and we know array are zero based and sheet number is starting from 1 so we subtract by 1.
     matrix = matrixArr[id - 1];
 
     tableBody.innerHTML = "";
 
-    tableBodyCreation();
+    // when i create new sheet then the functions is not working so I am tring to create something which helps it
+    // if (matrix === undefined) {
+    //     matrix = new Array(rows);
+    //     for (let i = 0; i < rows; i++) {
+    //         matrix[i] = new Array(columns);
+    //         for (let j = 0; j < columns; j++) {
+    //             matrix[i][j] = {};
+    //         }
+    //     }
+    // }
 
-    if (matrix === null || matrix === undefined) {
-        console.log("error");
-        return;
+    tableBodyCreation();
+    // during tableBodyCreation function call it will create a matrix but we already update the value of matrix in the viewSheet function so we using that value to show the data on the page
+
+    // if (matrix === null || matrix === undefined) {
+    //     console.log("error");
+    //     return;
+    // }
+    if (matrix !== undefined) {
+        matrix.forEach((row) => {
+            // here we are having row as the 1st element and we are accessing the 1st element in a row as a cell
+            row.forEach((cell) => {
+                // now i have id, innerText, cssText
+                if (cell.id) {
+                    let cellToBeEdited = document.getElementById(cell.id);
+                    cellToBeEdited.innerText = cell.text;
+                    cellToBeEdited.style.cssText = cell.style;
+                }
+            });
+        });
     }
 
-    matrix.forEach((row) => {
-        // here we are having row as the 1st element and we are accessing the 1st element in a row as a cell
-        row.forEach((cell) => {
-            // now i have id, innerText, cssText
-            if (cell.id) {
-                let cellToBeEdited = document.getElementById(cell.id);
-                cellToBeEdited.innerText = cell.text;
-                cellToBeEdited.style.cssText = cell.style;
-            }
-        });
-    });
     // console.log(event.target);
     let number = event.target.id.split("-")[1];
     // console.log(number);
