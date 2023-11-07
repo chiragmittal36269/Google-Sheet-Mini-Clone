@@ -1,76 +1,73 @@
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-	padding: 5px;
+    padding: 5px;
 }
 
 td,
 th {
-	min-width: 80px;
-	max-width: 100px;
-	border: 1px solid black;
-	line-height: 20px;
+    min-width: 80px;
+    max-width: 100px;
+    border: 1px solid black;
+    line-height: 20px;
 }
 
 table {
-	border-collapse: collapse;
-	width: auto;
-	/* overflow: hidden; */
+    border-collapse: collapse;
+    width: auto;
+    /* overflow: hidden; */
 }
 
 td:focus {
-	outline: none;
-	background-color: lightgray;
+    outline: none;
+    background-color: lightgray;
 }
 
 #current-cell {
-	background-color: lightgrey;
+    background-color: lightgrey;
 }
 
 .top-buttons-1,
-.top-buttons-2,
-.top-buttons-3,
-.top-buttons-4,
-.top-buttons-5 {
-	display: flex;
-	align-items: center;
-	justify-content: start;
-	gap: 10px;
-	margin-bottom: 10px;
+.top-buttons-2 {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 #bold-button,
 #italic-button,
 #underline-button {
-	font-weight: 750;
-	width: 50px;
-	height: 25px;
+    font-weight: 750;
+    width: 50px;
+    height: 25px;
 }
 
 #italic-button {
-	font-style: italic;
+    font-style: italic;
 }
 
 #underline-button {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 #left-align-button,
 #center-align-button,
 #right-align-button {
-	width: 50px;
-	height: 25px;
+    width: 50px;
+    height: 25px;
 }
 
 #left-align-button img,
 #center-align-button img,
 #right-align-button img {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 /* #justify-align-button {
@@ -85,66 +82,66 @@ td:focus {
 
 #font-size,
 #font-style {
-	width: fit-content;
-	height: 25px;
+    width: fit-content;
+    height: 25px;
 }
 
 #cut-button,
 #copy-button,
 #paste-button {
-	width: 50px;
-	height: 25px;
+    width: 50px;
+    height: 25px;
 }
 
 #cut-button img,
 #copy-button img,
 #paste-button img {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 #download-button img,
 #upload-button img {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
 #download-button {
-	width: 50px;
-	height: 25px;
+    width: 50px;
+    height: 25px;
 }
 
 #upperCase-button,
 #lowerCase-button,
 #capitalize-button {
-	width: 75px;
-	height: 25px;
+    width: 75px;
+    height: 25px;
 }
 
 #button-container {
-	display: flex;
-	gap: 5px;
-	margin-bottom: 10px;
-	flex-wrap: wrap;
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
 }
 
 #sheet-no {
-	margin-top: 5px;
-	margin-bottom: 5px;
-	font-size: 16px;
-	font-weight: 600;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 600;
 }
 
 #button-container button {
-	width: 100px;
+    width: 100px;
 }
 
 #add-sheet-button {
-	width: 75px;
-	height: 25px;
+    width: 75px;
+    height: 25px;
 }
 
 #add-sheet-button img {
-	width: 100%;
-	height: 100%;
+    width: 100%;
+    height: 100%;
 }
