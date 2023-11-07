@@ -25,7 +25,9 @@ const addSheetButton = document.getElementById("add-sheet-button");
 const buttonContainer = document.getElementById("button-container");
 const sheetNo = document.getElementById("sheet-no");
 
-let cutCopyCell = {};
+// let cutCopyCell = {};
+// if we do cutCopyCell to empty object then it is difficult to write condition statement so
+let cutCopyCell = null;
 
 let numSheets = 1;
 let currentSheetNum = 1;
@@ -407,7 +409,7 @@ pasteButton.addEventListener("click", (event) => {
 
     // in case of cut when we paste the data then it will delete from the clipboard history so we are doing this manually
     if (lastClickButton == "cut") {
-        cutCopyCell = {};
+        cutCopyCell = null;
     }
 
     // latest style to be in the matrix
