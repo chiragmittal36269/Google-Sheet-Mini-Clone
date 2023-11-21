@@ -25,6 +25,8 @@ const addSheetButton = document.getElementById("add-sheet-button");
 const buttonContainer = document.getElementById("button-container");
 const sheetNo = document.getElementById("sheet-no");
 
+const mergeCells = document.getElementById("merger");
+
 // let cutCopyCell = {};
 // if we do cutCopyCell to empty object then it is difficult to write if condition statement so
 let cutCopyCell = null;
@@ -707,3 +709,7 @@ window.onunload = () => {
     // Clear the local storage
     localStorage.clear();
 };
+
+mergeCells.addEventListener("click", (e) => {
+    currentCell.setAttribute("colSpan", 2);
+});
